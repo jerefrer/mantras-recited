@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sedan+SC&display=swap" rel="stylesheet">
+  <script src="./countup.umd.js"></script>
+  <title>Vajra Guru Mantra accumulation for the Long Life of our teachers</title>
+  <style>
+    @font-face {
+      font-family: "Yagpo Tibetan Uni";
+      src: url("https://github.com/RimeOCRLIB/Yagpo_Tibetan_Font/raw/master/YagpoFont/YagpoUni.ttf");
+    }
+    @keyframes fadeIn {
+      from {
+          opacity: 0;
+      }
+      to {
+          opacity: 1;
+      }
+    }
+    @keyframes fadeSlideUp {
+        from {
+            opacity: 0;
+            transform: translateY(5px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    @keyframes fadeSlideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-5px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    html {
+      background-color: #fefeec;
+    }
+    body {
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      background-image: url(background.jpg);
+      background-size: cover;
+      background-position: bottom;
+      background-repeat: no-repeat;
+      animation: fadeIn 0.4s ease-out;
+    }
+    .container {
+      position: absolute;
+      top: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+    .container > div {
+      position: relative;
+      flex: 0 auto;
+      text-align: center;
+      color: white;
+    }
+    h1 {
+      margin-bottom: 5vh;
+      font-family: "Sedan SC";
+      font-size: 4vh;
+      font-weight: bold;
+      transition: all 2s ease-out;
+    }
+    .counters {
+      text-align: center;
+      max-width: 50%;
+      margin: 0 auto;
+      color: #260B0C;
+    }
+    #counter-arabic,
+    #counter-tibetan {
+      opacity: 0;
+      transition: all 2s ease-out;
+    }
+    #counter-arabic {
+      font-family: "Sedan SC";
+      font-size: 7vh;
+      font-weight: bold;
+      transform: translateY(-10px);
+    }
+    #counter-tibetan {
+      font-family: "Yagpo Tibetan Uni";
+      font-size: 7vh;
+      line-height: 1em;
+      transform: translateY(10px);
+    }
+    .separator {
+      display: inline-block;
+      width: 0px;
+      height: 2px;
+      margin: 2vh 0 4vh;
+      opacity: 0;
+      background-color: #260B0C;
+      transition: all 2s ease-out;
+    }
+    .loaded #counter-arabic,
+    .loaded #counter-tibetan {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+    .loaded .separator {
+      width: 28vh;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div>
+      <div class="counters">
+        <h1>Vajra Guru Mantras recited for the long life of our teachers</h1>
+        <div id="counter-arabic">&nbsp;</div>
+        <div class="separator"></div>
+        <div id="counter-tibetan">&nbsp;</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Load the total from Google Sheets
+    fetch('https://sheets.googleapis.com/v4/spreadsheets/1gkc5A_2gIhnOjFkhRKOVX5edLAB9A_HQrGr8DkjNyss/values/A1?key=AIzaSyA6fRD267BvYe30SMglW4DIMFZmLW9zjOs')
+      .then(response => response.json())
+      .then(data => {
+        const total = data.values[0][0];
+        const tibetanCounterOptions = {
+          separator: '་',
+          numerals: ['༠', '༡', '༢', '༣', '༤', '༥', '༦', '༧', '༨', '༩'],
+        };
+        var CountUp = countUp.CountUp;
+        let arabicCounter = new CountUp('counter-arabic', total);
+        let tibetanCounter = new CountUp('counter-tibetan', total, tibetanCounterOptions);
+        if (!arabicCounter.error && !tibetanCounter.error) {
+          arabicCounter.start();
+          tibetanCounter.start();
+          document.querySelector('.container').classList.add('loaded');
+        } else {
+          console.error(arabicCounter.error);
+          console.error(tibetanCounter.error);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        document.getElementById('counter').innerText = 'Error fetching data';
+      });
+  </script>
+</body>
+</html>
