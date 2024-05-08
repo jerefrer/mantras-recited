@@ -1,45 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="shortcut icon" href="favicon.png" type="image/png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sedan+SC&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.1.0/fontfaceobserver.standalone.js"></script>
   <script src="./countup.umd.js"></script>
-  <title>Vajra Guru Mantra accumulation for the Long Life of our teachers</title>
+  <title>Vajra Guru Mantra accumulation for the long life of our teachers and all sentient beings</title>
   <style>
     @font-face {
       font-family: "Yagpo Tibetan Uni";
       src: url("https://github.com/RimeOCRLIB/Yagpo_Tibetan_Font/raw/master/YagpoFont/YagpoUni.ttf");
-    }
-    @keyframes fadeIn {
-      from {
-          opacity: 0;
-      }
-      to {
-          opacity: 1;
-      }
-    }
-    @keyframes fadeSlideUp {
-        from {
-            opacity: 0;
-            transform: translateY(5px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    @keyframes fadeSlideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-5px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
     }
     html {
       background-color: #fefeec;
@@ -52,8 +26,14 @@
       background-size: cover;
       background-position: bottom;
       background-repeat: no-repeat;
-      animation: fadeIn 0.4s ease-out;
+      opacity: 0;
+      transition: all 1s ease-in;
     }
+
+    body.font-loaded {
+      opacity: 1;
+    }
+
     .container {
       position: absolute;
       top: 30px;
@@ -73,7 +53,10 @@
       font-family: "Sedan SC";
       font-size: 4vh;
       font-weight: bold;
-      transition: all 2s ease-out;
+      transition: all 0.4s ease-in 0.4s;
+    }
+    body.font-loaded h1 {
+      opacity: 1;
     }
     .counters {
       text-align: center;
@@ -90,13 +73,13 @@
       font-family: "Sedan SC";
       font-size: 7vh;
       font-weight: bold;
-      transform: translateY(-10px);
+      transform: scale(0.4);
     }
     #counter-tibetan {
       font-family: "Yagpo Tibetan Uni";
       font-size: 7vh;
       line-height: 1em;
-      transform: translateY(10px);
+      transform: scale(0.4);
     }
     .separator {
       display: inline-block;
@@ -110,52 +93,183 @@
     .loaded #counter-arabic,
     .loaded #counter-tibetan {
       opacity: 1;
-      transform: translateY(0px);
+      transform: scale(1);
     }
     .loaded .separator {
       width: 28vh;
       opacity: 1;
     }
+    .loaded #open-modal-button {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    #open-modal-button {
+      font-size: 2vh;
+      margin-top: 30px;
+      padding: 1vh 2vh;
+      background: #260B0C;
+      border-radius: 1vh;
+      border: none;
+      color: rgba(255, 255, 255, 0.9);
+      cursor: pointer;
+      transform: scale(0);
+      opacity: 0;
+      transition: all 0.4s ease-in-out 2s;
+    }
+    #open-modal-button:hover {
+      background: #3C1A1B;
+      color: white;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal.visible {
+      display: block;
+    }
+
+    .modal-content {
+      background-color: #fefeec;
+      margin: 6vh auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 640px;
+      border-radius: 4vh;
+      height: 80vh;
+    }
+    
+    .modal-inner {
+      height: 100%;
+      overflow: hidden;
+    }
+    
+    .modal-inner iframe {
+      height: 90%;
+      overflow: hidden;
+    }
+
+    .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div>
-      <div class="counters">
-        <h1>Vajra Guru Mantras recited for the long life of our teachers</h1>
-        <div id="counter-arabic">&nbsp;</div>
-        <div class="separator"></div>
-        <div id="counter-tibetan">&nbsp;</div>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-inner">
+        <span id="close-modal-button" class="close">&times;</span>
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdCj1iRSWZJwH99f1Ofv0ggCK3rf9SFbf-keJ3CrwWbqeDbsA/viewform?embedded=true" width="640" height="1205" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>
       </div>
     </div>
   </div>
 
+  <div class="container">
+    <div>
+      <div class="counters">
+        <h1 id="title">Vajra Guru Mantras recited for the long life of our teachers and all sentient beings</h1>
+        <div id="counter-arabic">&nbsp;</div>
+        <div class="separator"></div>
+        <div id="counter-tibetan">&nbsp;</div>
+      </div>
+      <button id="open-modal-button">Contribute</button>
+    </div>
+  </div>
+
   <script>
-    // Load the total from Google Sheets
-    fetch('https://sheets.googleapis.com/v4/spreadsheets/1gkc5A_2gIhnOjFkhRKOVX5edLAB9A_HQrGr8DkjNyss/values/A1?key=AIzaSyA6fRD267BvYe30SMglW4DIMFZmLW9zjOs')
-      .then(response => response.json())
-      .then(data => {
-        const total = data.values[0][0];
-        const tibetanCounterOptions = {
-          separator: '་',
-          numerals: ['༠', '༡', '༢', '༣', '༤', '༥', '༦', '༧', '༨', '༩'],
-        };
-        var CountUp = countUp.CountUp;
-        let arabicCounter = new CountUp('counter-arabic', total);
-        let tibetanCounter = new CountUp('counter-tibetan', total, tibetanCounterOptions);
-        if (!arabicCounter.error && !tibetanCounter.error) {
-          arabicCounter.start();
-          tibetanCounter.start();
-          document.querySelector('.container').classList.add('loaded');
-        } else {
-          console.error(arabicCounter.error);
-          console.error(tibetanCounter.error);
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        document.getElementById('counter').innerText = 'Error fetching data';
+    document.addEventListener("DOMContentLoaded", function() {
+      var font = new FontFaceObserver('Sedan SC');
+      font.load().then(function () {
+        document.body.classList.add('font-loaded');
+        updateTotal();
+      }).catch(function (error) {
+        console.log('Font failed to load:', error);
+        document.body.classList.add('fonts-loaded');
       });
+    });
+
+    var title = "Vajra Guru Mantra accumulation for the long life of our teachers and all sentient beings";
+    const userLang = navigator.language || navigator.userLanguage; 
+    if (userLang.startsWith('fr')) {
+      title = "Accumulation du mantra du Vajra Guru pour la longue vie de nos maîtres et de tous les êtres sensibles";
+      document.title = title;
+      document.querySelector('#title').textContent = title;
+    }
+
+    const tibetanCounterOptions = {
+      separator: '་',
+      numerals: ['༠', '༡', '༢', '༣', '༤', '༥', '༦', '༧', '༨', '༩'],
+    };
+    var CountUp = countUp.CountUp;
+    let arabicCounter = new CountUp('counter-arabic', 0);
+    let tibetanCounter = new CountUp('counter-tibetan', 0, tibetanCounterOptions);
+    arabicCounter.start();
+    tibetanCounter.start();
+
+    function updateTotal() {
+      fetch('https://sheets.googleapis.com/v4/spreadsheets/1gkc5A_2gIhnOjFkhRKOVX5edLAB9A_HQrGr8DkjNyss/values/A1?key=AIzaSyA6fRD267BvYe30SMglW4DIMFZmLW9zjOs')
+        .then(response => response.json())
+        .then(data => {
+          var total = data.values[0][0];
+          if (!arabicCounter.error && !tibetanCounter.error) {
+            arabicCounter.update(total);
+            tibetanCounter.update(total);
+            document.querySelector('.container').classList.add('loaded');
+          } else {
+            console.error(arabicCounter.error);
+            console.error(tibetanCounter.error);
+          }
+          })
+        .catch(error => console.error('Error fetching data:', error));
+    }
+
+    updateTotal();
+
+    var modal = document.querySelector("#modal");
+    var button = document.querySelector("#open-modal-button");
+    var span = document.querySelector("#close-modal-button");
+
+    function openModal () {
+      modal.classList.add('visible');
+    }
+
+    function closeModal () {
+      console.log('updated');
+      updateTotal();
+      modal.classList.remove('visible');
+    }
+
+    button.onclick = openModal;
+
+    span.onclick = closeModal;
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        closeModal();
+      }
+    }
   </script>
+
 </body>
 </html>
