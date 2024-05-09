@@ -1,0 +1,232 @@
+
+html {
+  background-color: #fefeec;
+}
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-image: url(background.jpg);
+  background-size: cover;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: all 1s ease-in;
+}
+
+body.font-loaded {
+  opacity: 1;
+}
+
+.container {
+  position: absolute;
+  top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.container > div {
+  position: relative;
+  flex: 0 auto;
+  text-align: center;
+  color: white;
+}
+h1 {
+  margin-bottom: 5vh;
+  font-family: "Sedan SC";
+  font-size: 4vh;
+  font-weight: bold;
+  transition: all 0.4s ease-in 0.4s;
+}
+body.font-loaded h1 {
+  opacity: 1;
+}
+.container-inner {
+  text-align: center;
+  max-width: 50%;
+  margin: 0 auto;
+  color: #260B0C;
+}
+#counter {
+  font-family: "Sedan SC";
+  font-size: 7vh;
+  font-weight: bold;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 1.2s ease-in-out;
+}
+.separator {
+  display: inline-block;
+  width: 0px;
+  height: 2px;
+  margin: 2vh 0 4vh;
+  opacity: 0;
+  background-color: #260B0C;
+  transition: all 2s ease-out;
+}
+.loaded #counter {
+  opacity: 1;
+  transform: scale(1);
+}
+.loaded .separator {
+  width: 28vh;
+  opacity: 1;
+}
+.loaded #open-form-button {
+  transform: scale(1);
+  opacity: 1;
+}
+
+#help-button {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  width: 5vh;
+  height: 5vh;
+  font-size: 3.7vh;
+  color: #260a0b;
+  background: #fefeec;
+  border: 2px solid #260a0b;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  transition: filter 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+#help-button:hover {
+  filter: brightness(0.9) contrast(0.9);
+}
+
+#open-form-button {
+  font-size: 2vh;
+  margin-top: 4vh;
+  padding: 1vh 2vh;
+  background: #260B0C;
+  border-radius: 1vh;
+  border: none;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  transform: scale(0.9);
+  opacity: 0;
+  transition: all 0.4s ease-in-out 2s;
+}
+#open-form-button:hover {
+  background: #3C1A1B;
+  color: white;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.6);
+}
+
+.modal.visible {
+  display: block;
+}
+
+.modal-content {
+  background-color: #fefeec;
+  margin: 6vh auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 640px;
+  max-width: 90%;
+  border-radius: 4vh;
+  height: 80vh;
+}
+
+.modal-inner {
+  height: 100%;
+  overflow: hidden;
+}
+
+.modal-inner iframe {
+  height: 90%;
+}
+.modal-inner iframe html {
+  overflow-x: hidden !important;
+}
+
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: min(4vh, 28px);
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .container-inner {
+    max-width: 90%;
+  }
+}
+
+#help-modal .modal-content {
+  height: auto;
+  margin-top: 13vh;
+}
+
+#help-modal .modal-inner {
+  padding: min(4vh, 18px);
+}
+
+#help-modal h2 {
+  margin-top: 0;
+}
+
+.modal h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1em;
+}
+
+.modal h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1em;
+}
+
+.modal p, .modal ul {
+  font-size: 1rem;
+  margin-bottom: 1em;
+}
+
+.modal ul li {
+  margin-bottom: 0.5em;
+}
+
+/* Breakpoint for medium-sized screens (tablets) */
+@media screen and (max-width: 768px) {
+  .modal h2 {
+    font-size: 1.9rem;
+    margin-bottom: 1em;
+  }
+
+  .modal p, .modal ul  {
+    font-size: 1.15rem;
+  }
+}
+
+/* Breakpoint for small screens (mobile devices) */
+@media screen and (max-width: 576px) {
+  .modal h2 {
+    font-size: 2rem;
+    margin-bottom: 1em;
+  }
+
+  .modal p, .modal ul  {
+    font-size: 1.3rem;
+  }
+}
