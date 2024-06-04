@@ -28,13 +28,17 @@ var CountUp = countUp.CountUp;
 let counter = new CountUp('counter', 0);
 counter.start();
 
-function updateTotal() {
+function updateTotal(throwPetalsIfCountHasChanged=false) {
   fetch('https://sheets.googleapis.com/v4/spreadsheets/1gkc5A_2gIhnOjFkhRKOVX5edLAB9A_HQrGr8DkjNyss/values/A1?key=AIzaSyA6fRD267BvYe30SMglW4DIMFZmLW9zjOs')
   .then(response => response.json())
   .then(data => {
     var total = data.values[0][0];
     if (!counter.error) {
+      var countHasChanged = counter.endVal != parseInt(total);
       counter.update(total);
+      if (throwPetalsIfCountHasChanged && countHasChanged) {
+        throwPetals();
+      }
       document.querySelector('#spinner')?.remove();
       document.querySelector('.container').classList.add('loaded');
     } else {
@@ -61,7 +65,7 @@ function openModal (name) {
 function closeModals () {
   var formModal = getModal('form');
   if (formModal.classList.contains('visible')) {
-    updateTotal();
+    updateTotal(true);
   }
   document.querySelectorAll('.modal').forEach(modal => modal.classList.remove('visible'));
 }
@@ -75,4 +79,54 @@ window.onclick = function(event) {
   if (event.target.classList.contains('modal')) {
     closeModals();
   }
+}
+
+function throwPetals() {
+  const count = 200;
+  const defaults = {
+    origin: { y: 0.3 },
+    shapes: ["image"],
+    shapeOptions: {
+      image: {
+        src: "./petal.png",
+        width: 245,
+        height: 292,
+      },
+    },
+  };
+  
+  function fire(particleRatio, opts) {
+    confetti(
+      Object.assign({}, defaults, opts, {
+        particleCount: Math.floor(count * particleRatio),
+      })
+    );
+  }
+  
+  fire(0.25, {
+    spread: 26,
+    startVelocity: 55,
+  });
+  
+  fire(0.2, {
+    spread: 60,
+  });
+  
+  fire(0.35, {
+    spread: 100,
+    decay: 0.91,
+    scalar: 0.8,
+  });
+  
+  fire(0.1, {
+    spread: 120,
+    startVelocity: 25,
+    decay: 0.92,
+    scalar: 1.2,
+  });
+  
+  fire(0.1, {
+    spread: 120,
+    startVelocity: 45,
+  });
 }
