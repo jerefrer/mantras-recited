@@ -18,6 +18,8 @@ if (userLang.startsWith('fr')) {
   document.querySelector('#open-form-button').textContent = "Contribuer";
   document.querySelectorAll('.english').forEach(element => element.style.display = 'none');
   document.querySelectorAll('.french').forEach(element => element.style.display = 'block');
+} else {
+  document.querySelectorAll('.french').forEach(element => element.style.display = 'none');
 }
 
 const tibetanCounterOptions = {
