@@ -32,7 +32,7 @@ function updateTotal(throwPetalsIfCountHasChanged=false) {
   fetch('https://sheets.googleapis.com/v4/spreadsheets/1gkc5A_2gIhnOjFkhRKOVX5edLAB9A_HQrGr8DkjNyss/values/A1?key=AIzaSyA6fRD267BvYe30SMglW4DIMFZmLW9zjOs')
   .then(response => response.json())
   .then(data => {
-    var total = data.values[0][0];
+    var total = parseInt(data.values[0][0]);
     if (!counter.error) {
       var countHasChanged = counter.endVal != parseInt(total);
       counter.update(total);
